@@ -31,3 +31,5 @@ build/
 .vscode/
 
 /logs
+
+r1.txt

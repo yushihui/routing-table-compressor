@@ -1,8 +1,19 @@
 package com.ysh;
 
 import java.security.InvalidParameterException;
+import java.util.regex.Pattern;
 
 public class IPUtils {
+
+
+    private static final String IP_ADDRESS = "(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})\\.(\\d{1,3})";
+    private static final String SLASH_FORMAT = IP_ADDRESS + "/(\\d{1,2})"; // 0 -> 32
+    private static final Pattern addressPattern = Pattern.compile(IP_ADDRESS);
+    private static final Pattern cidrPattern = Pattern.compile(SLASH_FORMAT);
+
+    public static boolean isValidCIDR(String ip) {
+        return cidrPattern.matcher(ip).matches();
+    }
 
     public static long ipToLong(String ipAddress) {
         String[] ipAddressInArray = ipAddress.split("\\.");

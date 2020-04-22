@@ -19,7 +19,7 @@ class RoutingTrieTreeTest {
                 new RoutingTableRow("192.168.212.0/23", "172.20.4.1"),
                 new RoutingTableRow("192.168.236.0/24", "172.20.4.161"),
                 new RoutingTableRow("192.168.219.0/24", "172.20.4.1")));
-        tree.optimize();
+        tree.compress();
         List<RoutingTableRow> results = tree.exportCompressionRTable();
         assertAll(
                 () -> assertEquals(2, results.size()),

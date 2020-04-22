@@ -12,6 +12,9 @@ public class RoutingTrieTree {
     }
 
     public void addRule(RoutingTableRow routingTableRow) {
+        if (routingTableRow == null) {
+            return;
+        }
         long[] subnet = IPUtils.parsePrefix(routingTableRow.getPrefix());
         long bit;
         TrieNode current = root;
@@ -32,11 +35,11 @@ public class RoutingTrieTree {
         current.nextHop = routingTableRow.getNextHop();
     }
 
-    public void optimize() {
-        optimize(root, null);
+    public void compress() {
+        postOrderCompress(root, null);
     }
 
-    private void optimize(TrieNode node, String parentAction) {
+    private void postOrderCompress(TrieNode node, String parentAction) {
         if (node.nextHop != null) {
             parentAction = node.nextHop;
         }
@@ -59,7 +62,7 @@ public class RoutingTrieTree {
     private void mergeParentKid(TrieNode p, boolean isLeft, String parentAction) {
         TrieNode k = isLeft ? p.leftZero : p.rightOne;
         if (k == null) return;
-        optimize(k, parentAction);
+        postOrderCompress(k, parentAction);
         if (k.nextHop == null) return;
         if (k.nextHop.equals(parentAction)) {
             if (isLeft) {

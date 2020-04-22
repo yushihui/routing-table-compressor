@@ -9,6 +9,10 @@ public class RoutingTableRow {
         this.nextHop = nextHop;
     }
 
+    public RoutingTableRow(String prefix) {
+        this.prefix = prefix;
+    }
+
     public String getPrefix() {
         return prefix;
     }
